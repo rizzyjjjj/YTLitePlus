@@ -24,7 +24,8 @@ BUNDLE_ID = com.google.ios.youtube
 
 YTLitePlus_FILES = YTLitePlus.xm $(shell find Source -name '*.xm' -o -name '*.x' -o -name '*.m')
 YTLitePlus_FRAMEWORKS = UIKit Security
-YTLitePlus_INJECT_DYLIBS = Tweaks/YTLite/var/jb/Library/MobileSubstrate/DynamicLibraries/YTLite.dylib .theos/obj/libFLEX.dylib .theos/obj/YTUHD.dylib .theos/obj/YouPiP.dylib .theos/obj/YouTubeDislikesReturn.dylib .theos/obj/YTABConfig.dylib .theos/obj/DontEatMyContent.dylib .theos/obj/YTVideoOverlay.dylib .theos/obj/YouTimeStamp.dylib .theos/obj/YouGroupSettings.dylib
+# REMOVED YouTubeDislikesReturn.dylib below to prevent crashing
+YTLitePlus_INJECT_DYLIBS = Tweaks/YTLite/var/jb/Library/MobileSubstrate/DynamicLibraries/YTLite.dylib .theos/obj/libFLEX.dylib .theos/obj/YTUHD.dylib .theos/obj/YouPiP.dylib .theos/obj/YTABConfig.dylib .theos/obj/DontEatMyContent.dylib .theos/obj/YTVideoOverlay.dylib .theos/obj/YouTimeStamp.dylib .theos/obj/YouGroupSettings.dylib
 YTLitePlus_EMBED_LIBRARIES = $(THEOS_OBJ_DIR)/libcolorpicker.dylib
 YTLitePlus_EMBED_FRAMEWORKS = $(_THEOS_LOCAL_DATA_DIR)/$(THEOS_OBJ_DIR_NAME)/install_Alderis.xcarchive/Products/var/jb/Library/Frameworks/Alderis.framework
 YTLitePlus_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unused-but-set-variable -DTWEAK_VERSION=\"$(PACKAGE_VERSION)\"
@@ -36,7 +37,8 @@ YTLitePlus_USE_FISHHOOK = 0
 
 include $(THEOS)/makefiles/common.mk
 ifneq ($(JAILBROKEN),1)
-SUBPROJECTS += Tweaks/Alderis Tweaks/FLEXing/libflex Tweaks/YTUHD Tweaks/YouPiP Tweaks/Return-YouTube-Dislikes Tweaks/YTABConfig Tweaks/DontEatMyContent Tweaks/YTVideoOverlay Tweaks/YouTimeStamp Tweaks/YouGroupSettings
+# REMOVED Tweaks/Return-YouTube-Dislikes below to prevent crashing
+SUBPROJECTS += Tweaks/Alderis Tweaks/FLEXing/libflex Tweaks/YTUHD Tweaks/YouPiP Tweaks/YTABConfig Tweaks/DontEatMyContent Tweaks/YTVideoOverlay Tweaks/YouTimeStamp Tweaks/YouGroupSettings
 include $(THEOS_MAKE_PATH)/aggregate.mk
 endif
 include $(THEOS_MAKE_PATH)/tweak.mk
@@ -60,8 +62,8 @@ internal-clean::
 ifneq ($(JAILBROKEN),1)
 before-all::
 	@if [[ ! -f $(YTLITE_DEB) ]]; then \
-        	rm -rf $(YTLITE_PATH)/*; \
-        	$(PRINT_FORMAT_BLUE) "Downloading YTLite"; \
+         rm -rf $(YTLITE_PATH)/*; \
+         $(PRINT_FORMAT_BLUE) "Downloading YTLite"; \
 	fi
 before-all::
 	@if [[ ! -f $(YTLITE_DEB) ]]; then \
